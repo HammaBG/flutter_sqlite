@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class sql_helper{
 
-  static Future<void> createTables(Database database) async {
+  static Future<void> createItem(Database database) async {
     await database.execute("""Create Table items(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     title TEXT,
@@ -26,6 +26,25 @@ class sql_helper{
   }
 
   static Future<int> updateItem(
-      int id , String title , String?
-      )
+      int id , String title , String? description) async {
+    final db = await sql_helper.db();
+
+    final data = {
+      'title' : title ,
+      'description' :description,
+      'createdAt' : DateTime.now().toString()
+    };
+    final result = await db.update('items', data , where: "id = ?" , whereArgs: [id]);
+    return result;
+  }
+
+  static Future<void> deleteItem(int id) async {
+    final db = await sql_helper.db();
+    try{
+      await db.delete("items" , where: "id = ?" , whereArgs: [id]);
+    } catch (err) {
+      debugPrint ( "Somethings went wrong when deleting an item : $err" );
+    }
+  }
+
 }
