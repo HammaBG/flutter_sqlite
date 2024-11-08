@@ -24,4 +24,8 @@ class sql_helper{
     final db = await sql_helper.db();
     return db.query('items' , orderBy: "id");
   }
+
+  static Future<int> updateItem(
+      int id , String title , String?
+      )
 }
