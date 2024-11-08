@@ -60,13 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _test() {
 
-   sql_helper.createItem("item1","desc1");
+   sql_helper.createItem("item1" , "desc1");
    sql_helper.createItem("item2","desc2");
    List<Map<String,dynamic>> journals=  sql_helper.getItems() as List<Map<String,dynamic>>;
    print("*******************");
    for(int i=0; i<journals.length;i++){
      print(journals[i]['id'].toString()+":"+journals[i]['title']);
    }
+   print("*******************");
   }
 
   @override

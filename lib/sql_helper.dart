@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class sql_helper{
 
-  static Future<void> createItem(Database database) async {
+  static Future<void> createTables(Database database) async {
     await database.execute("""Create Table items(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     title TEXT,
@@ -19,6 +19,12 @@ class sql_helper{
       await createTables(database);
     });
 
+  }
+  static Future<int> createItem(String title , String? description) async {
+    final db = await sql_helper.db();
+    final data = {'title' :title , 'description' : description};
+    final id = await db.insert('items', data , conflictAlgorithm: ConflictAlgorithm.replace);
+    return id;
   }
   static Future<List<Map<String, dynamic>>> getItems() async {
     final db = await sql_helper.db();
