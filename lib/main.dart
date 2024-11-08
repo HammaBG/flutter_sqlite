@@ -58,14 +58,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _test() {
+  Future<void> _test() async {
 
-   sql_helper.createItem("item1" , "desc1");
-   sql_helper.createItem("item2","desc2");
-   List<Map<String,dynamic>> journals=  sql_helper.getItems() as List<Map<String,dynamic>>;
+   //sql_helper.createItem("item3" , "desc3");
+   //sql_helper.updateItem(2,"it2","new desc");
+   sql_helper.deleteItem(3);
+   List<Map<String,dynamic>> journals= await  sql_helper.getItems() ;
    print("*******************");
    for(int i=0; i<journals.length;i++){
-     print(journals[i]['id'].toString()+":"+journals[i]['title']);
+     print(journals[i]['id'].toString()+":"+journals[i]['title']+":"+journals[i]['description']);
    }
    print("*******************");
   }
